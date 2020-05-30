@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyService1", "MoneyService1\MoneyService1.csproj", "{17D48FE3-E00F-4A28-AA79-3F3D3F6E6652}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinesLogic", "BusinesLogic", "{A7D64971-2894-43C2-A34E-A0AAD3303860}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{DCCF296B-B214-4EB4-A7FE-27953053F0B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableSettings", "TableSettings\TableSettings.csproj", "{1BB5E535-17F0-46C7-8E78-99150096D573}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17D48FE3-E00F-4A28-AA79-3F3D3F6E6652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D48FE3-E00F-4A28-AA79-3F3D3F6E6652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D48FE3-E00F-4A28-AA79-3F3D3F6E6652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D48FE3-E00F-4A28-AA79-3F3D3F6E6652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCCF296B-B214-4EB4-A7FE-27953053F0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCCF296B-B214-4EB4-A7FE-27953053F0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCCF296B-B214-4EB4-A7FE-27953053F0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCCF296B-B214-4EB4-A7FE-27953053F0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB5E535-17F0-46C7-8E78-99150096D573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB5E535-17F0-46C7-8E78-99150096D573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB5E535-17F0-46C7-8E78-99150096D573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB5E535-17F0-46C7-8E78-99150096D573}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DCCF296B-B214-4EB4-A7FE-27953053F0B9} = {A7D64971-2894-43C2-A34E-A0AAD3303860}
+		{1BB5E535-17F0-46C7-8E78-99150096D573} = {A7D64971-2894-43C2-A34E-A0AAD3303860}
+	EndGlobalSection
+EndGlobal
