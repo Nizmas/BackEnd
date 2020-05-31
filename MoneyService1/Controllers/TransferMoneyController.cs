@@ -24,6 +24,7 @@ namespace MoneyService1.Controllers
                     tokenGuid = new Guid("f414ec5a-a585-4368-beec-6b488cf76b51"); 
                     score.ScoreFrom = "4000000000";
                 }
+                var istemplate = false;
                 var scService = new ScoreService();
                 var clService = new ClientService();
                 var histService = new HistoryService();
@@ -51,7 +52,10 @@ namespace MoneyService1.Controllers
                         cashMore = cashMore + score.HowMuch;
                         scService.WorkScore(new ScoreModel {NumScore = score.ScoreFrom, Cash = cashLess, ClientId = tokenGuid}, "UPDATE scores SET cash = @cash WHERE clientid = @clientid AND numscore = @numscore;");
                         scService.WorkScore(new ScoreModel {NumScore = score.ScoreTo, Cash = cashMore, ClientId = takerId.UserGuid}, "UPDATE scores SET cash = @cash WHERE clientid = @clientid AND numscore = @numscore AND exist = TRUE;");
-                        histService.WorkHistory(new HistoryModel {ScoreFrom = score.ScoreFrom, ScoreTo = score.ScoreTo,  HowMuch = score.HowMuch, ClientId = tokenGuid, TakerId = takerId.UserGuid}, "INSERT INTO histories(scorefrom, scoreto, howmuch, clientid, takerid) VALUES (@scorefrom, @scoreto, @howmuch, @clientid, @takerid);");
+                        if (score.IsTemplate == "true") istemplate = true;
+
+                        histService.WorkHistory(new HistoryModel {ScoreFrom = score.ScoreFrom, ScoreTo = score.ScoreTo,  HowMuch = score.HowMuch, ClientId = tokenGuid, TakerId = takerId.UserGuid, Template = istemplate}, 
+                            "INSERT INTO histories(scorefrom, scoreto, howmuch, clientid, takerid, template) VALUES (@scorefrom, @scoreto, @howmuch, @clientid, @takerid, @template);");
                         return Ok("Moneys has been sent");
                     }
                     return BadRequest("Check acceptor name!");  

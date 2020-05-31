@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
-using MoneyService1.DTO;
 using TableSettings;
 
 namespace MoneyService1.Controllers
@@ -18,8 +18,8 @@ namespace MoneyService1.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("[controller]")]
-        [HttpPost]
-        public IActionResult Get([FromBody] TemplateCredentials templ)
+        [HttpGet]
+        public ActionResult<string> ShowTempl()
         {
             var idClaim = User.Claims.FirstOrDefault(x =>
                 x.Type.Equals(JwtRegisteredClaimNames.Jti, StringComparison.InvariantCultureIgnoreCase));
@@ -29,38 +29,43 @@ namespace MoneyService1.Controllers
                 Guid tokenGuid = Guid.Parse(idClaim.ToString().Remove(0, 5));
                 var templService = new TemplateService();
                 var scService = new ScoreService();
-                string templateList = "";
                 var workerCount = 0;
                 var oldCount = 1;
+                List<Templates> tempList = new List<Templates>();
                 while (workerCount != oldCount)
                 {
                     try
                     {
-                        var showTemplate = templService.ReturnTemplate(new TemplateModel {ScoreFrom = templ.ScoreFrom, Id = workerCount, ClientId = tokenGuid},
-                            "SELECT * FROM templates WHERE scorefrom = @scorefrom AND clientid = @clientid AND id >= @id;");
+                        var showTemplate = templService.ReturnTemplate(new TemplateModel {Id = workerCount, ClientId = tokenGuid},
+                            "SELECT * FROM templates WHERE clientid = @clientid AND id >= @id;");
                         oldCount = workerCount;
                         workerCount = showTemplate.Id + 1;
-                         if (scService.ReturnScore(
-                                         new ScoreModel {ClientId = tokenGuid, NumScore = showTemplate.ScoreTo},
-                                         "SELECT * FROM scores WHERE numscore=@numscore AND clientid=@clientid") != null && scService.ReturnScore(
-                                         new ScoreModel {ClientId = tokenGuid, NumScore = showTemplate.ScoreFrom},
-                                         "SELECT * FROM scores WHERE numscore=@numscore AND clientid=@clientid") != null)
-                             templateList = templateList + "Transfer to: ";
-                         else {templateList = templateList + "Payment for ";
-                             templateList = templateList + showTemplate.TakerName + ": ";
-                         }
-                         templateList = templateList + showTemplate.ScoreTo + "\r\n";
-                         templateList = templateList + "   " + showTemplate.HowMuch + " rub" + "\r\n\r\n";
+                        
+                        Templates tmp = new Templates();
+                        tmp.TemplateName = showTemplate.TemplateName;
+                        tmp.ScoreFrom = showTemplate.ScoreFrom;
+                        tmp.ScoreTo = showTemplate.ScoreTo;
+                        tmp.HowMuch = showTemplate.HowMuch.ToString();
+                        tmp.TakerName = showTemplate.TakerName;
+                        tempList.Add(tmp);
                     }
                     catch
                     {
                         workerCount = oldCount;
-                        if (templateList.Length > 4) templateList = templateList.Substring(0, templateList.Length - 4);
                     }
                 }
-                return Ok(templateList);
+                return Ok(tempList);
             }
             return BadRequest("No claim");
         }
+    }
+    
+    class Templates
+    {
+        public string TemplateName { get; set; }
+        public string ScoreFrom { get; set; }
+        public string ScoreTo { get; set; }
+        public string HowMuch { get; set; }
+        public string TakerName { get; set; }
     }
 }

@@ -6,5 +6,6 @@
             public string ScoreTo { get; set; }
             public float HowMuch { get; set; }
             public string TakerName { get; set; }
+            public string IsTemplate { get; set; }
         }
 }

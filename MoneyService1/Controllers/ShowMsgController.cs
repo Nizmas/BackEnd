@@ -34,6 +34,7 @@ namespace MoneyService1.Controllers
                             "SELECT * FROM viewmessages WHERE clientid = @clientid AND id >= @id;");
                         oldCount = workerCount;
                         workerCount = showMessage.Id + 1;
+                        
                         Messages msg = new Messages();
                         if (showMessage.AuthorId == tokenGuid) msg.Author = "Вы";
                             else msg.Author = "Сотрудник";
